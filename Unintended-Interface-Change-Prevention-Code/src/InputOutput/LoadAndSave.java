@@ -84,7 +84,7 @@ public class LoadAndSave {
 				//trim in case there are white spaces in the same line with the path to the file
 				Path pathToConfigInterfaceFile = Paths.get(stringList.get(i).trim());
 				pathList.add(pathToConfigInterfaceFile);
-			} else if((file != null && file.getPath().trim().length() == 0) || file.getPath().startsWith("#")) {
+			} else if((file != null && file.getPath().trim().length() == 0) || file.getPath().trim().startsWith("#")) {
 				// Do nothing since "#" is commenting inside the file
 			} else{
 				throw new InvalidPathsInsideConfigurationException(file.getPath());
