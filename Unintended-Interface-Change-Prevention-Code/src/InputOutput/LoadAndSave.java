@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -42,42 +44,69 @@ public class LoadAndSave {
 		return (boolean) json.get(DefinedStrings.runPipelineKey.getValue());	
 	}
 	
-	public byte[] readBinaryOfPath(Path path) throws IOException {
+	public JSONArray readBinaryOfPath(Path path) throws IOException {
 		byte[] binary = Files.readAllBytes(path);
-		return binary;
+		JSONArray array = new JSONArray();
+		for(int i = 0; i < binary.length; i++) {
+			array.add(binary[i]);
+		}
+		return array;
 	}
 	
-	public void saveBinaries(JSONObject json) throws IOException {
+	public void saveBinaries(ArrayList<JSONObject> allJSONs) throws IOException {
 		ArrayList<String> list = new ArrayList<>();
 		Path path = Paths.get(DefinedStrings.binaryFile.getValue());
-		list.add(json.toJSONString());
+		System.out.println("before save");
+		
+		for(int i = 0; i < allJSONs.size(); i++) {
+			list.add(allJSONs.get(i).toJSONString());
+		}
+		
 		Files.write(path, list);
+		System.out.println("after save");
+	}
+	
+	public void updateSavedBinaries() throws IOException, InvalidPathsInsideConfigurationException, ParseException {
+		ArrayList<JSONObject> allJSONs = new ArrayList<>();
+		ArrayList<Path> allPaths = loadPaths();
+		//ArrayList<JSONObject> oldBinaries = loadBinaries();
+		
+		for(int i = 0; i < allPaths.size(); i++) {
+			JSONObject newBinaries = new JSONObject();
+			newBinaries.put(allPaths.get(i).getFileName().toString(), readBinaryOfPath(allPaths.get(i)));
+			allJSONs.add(newBinaries);
+		}
+		saveBinaries(allJSONs);
 	}
 	
 	
-	public JSONObject loadBinaries() throws IOException, ParseException {
+	/*
+	 * Each Line contains a JSON which has the key value of the name of a binary
+	 */
+	public ArrayList<JSONObject> loadBinaries() throws IOException, ParseException {
 		JSONParser parser = new JSONParser();
 		Path path = Paths.get(DefinedStrings.binaryFile.getValue());
-		ArrayList<String> list = (ArrayList<String>) Files.readAllLines(path);	
+		ArrayList<String> list = (ArrayList<String>) Files.readAllLines(path);
+		ArrayList<JSONObject> allReadJsons = new ArrayList<>();
 		
-		Object o = parser.parse(list.get(0));
-		JSONObject json = (JSONObject) o;
-		return json;
+		
+		for(int i = 0; i < list.size(); i++) {
+			Object o = parser.parse(list.get(i));
+			allReadJsons.add((JSONObject) o);
+		}
+		return allReadJsons;
 	}
 	
 	/*
-	 * loading all paths that are defined inside the configuration file 
+	 * loading all paths that are defined inside the configuration file for this tool
 	 * 
 	 */
-	
 	public ArrayList<Path> loadPaths() throws IOException, InvalidPathsInsideConfigurationException{
 		Path path = Paths.get(DefinedStrings.PathsToConfigurationInterfaces.getValue());
 		ArrayList<String> stringList = (ArrayList<String>) Files.readAllLines(path);
 		ArrayList<Path> pathList = new ArrayList<>();
 		
-	
 		for(int i = 0; i < stringList.size();i++) {
-			System.out.println(i);
 			//trim in case there are white spaces in the same line with the path to the file
 			File file = new File(stringList.get(i).trim());
 			if(file.exists()) {
@@ -90,8 +119,7 @@ public class LoadAndSave {
 				throw new InvalidPathsInsideConfigurationException(file.getPath());
 			}
 		}
-		
-		System.out.println(pathList);
+
 		return pathList;
 	}
 	
