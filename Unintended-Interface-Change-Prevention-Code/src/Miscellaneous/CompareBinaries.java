@@ -15,8 +15,8 @@ public class CompareBinaries {
 
 	/*
 	 * Compares the binaries of the Files given in the Paths file to the stored binaries
-	 * are the number of binaries and paths equal and all binaries are matching the previous binaries everything is fine
-	 * in case there are differences the pipeline won
+	 * are the number of binaries and paths equal and all binaries are matching the previous binaries everything return true
+	 * in case there are differences method returns false
 	 *  
 	 */
 	public boolean areCurrentBinariesSameAsStoredOnes() throws IOException, ParseException, InvalidPathsInsideConfigurationException {
@@ -47,15 +47,11 @@ public class CompareBinaries {
 						break inner;
 					//the current comparison showed that there are unequal files
 					} else {
-//						System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
-//						return false;
 						filesThatHaveBeenChanged.add(allPaths.get(j));
 						break inner;
 					}
 				//set run variable false since a interface is existing but it is not stored in the safe file
 				} else if(j == allPaths.size()-1) {
-//					System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
-//					return false;
 					filesThatHaveBeenChanged.add(allPaths.get(j));
 					break inner;
 				}
@@ -65,16 +61,12 @@ public class CompareBinaries {
 			// no files have been changed. old states and current sates of all files are binary equal
 			return true;
 		} else {
-			// print all files that have been changed
 			System.out.println("Files that have been changed:");
 			for(int i = 0; i < filesThatHaveBeenChanged.size(); i++) {
 				System.out.println(filesThatHaveBeenChanged.get(i));
 			}
 			return false;
 		}
-		
-//		//no mismatches where fund until here --> everything has to be correct
-//		return true;
 	}
 	
 	public boolean compareJSONArrays(JSONArray first, JSONArray second) {
