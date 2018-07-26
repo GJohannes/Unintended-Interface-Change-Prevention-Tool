@@ -8,69 +8,32 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import CustomExceptions.InterfaceHasChangedException;
 import CustomExceptions.InvalidPathsInsideConfigurationException;
 import InputOutput.LoadAndSave;
 import Miscellaneous.CompareBinaries;
 
 public class MainClass {
 
-	public static void main(String[] args) throws IOException, ParseException, InvalidPathsInsideConfigurationException {
+	public static void main(String[] args) throws IOException, ParseException, InvalidPathsInsideConfigurationException, InterfaceHasChangedException {
+		
+		args = new String[2];
+		args[0] = "pipelinePart";
+		//args[0] = "acceptNewInterfaces";
 		
 		
 		if(args.length > 0 && args[0].equals("acceptNewInterfaces")) {
-			
+			LoadAndSave loadSave = new LoadAndSave();
+			loadSave.updateSavedBinaries();
 		} else if (args.length > 0 && args[0].equals("pipelinePart")) {
-			
+			CompareBinaries compare = new CompareBinaries();
+			if(compare.areCurrentBinariesSameAsStoredOnes()) {
+				System.out.println("No configuration changes detected");
+			} else {
+				throw new InterfaceHasChangedException();
+			}
 		} else {
 			System.out.println("First argument has to be acceptNewInterfaces or pipelinePart");
 		}
-		
-		
-		
-		LoadAndSave loadSave = new LoadAndSave();
-		CompareBinaries compare = new CompareBinaries();
-		
-		//loadSave.saveBinaries(null);
-		
-		compare.compareCurrentBinariesToAlreadyStoredOnes();
-		
-		
-		//loadSave.updateSavedBinaries();
-		
-		
-		
-		
-		
-		
-//		System.out.println("initial state");
-//		
-//		
-//		JSONObject json = new JSONObject();
-//		LoadAndSave loadSave = new LoadAndSave();
-//		//load.saveRunPipelineBoolean(false);
-//		ArrayList<Path> allPaths = loadSave.loadPaths();
-//		
-//		for(int i = 0; i < allPaths.size();i++) {
-//			
-//			JSONArray array = new JSONArray();
-//			byte [] binary = loadSave.readBinaryOfPath(allPaths.get(i));
-//			
-//			
-//			for(int j = 0; j < binary.length; j++) {
-//				
-//				array.add(binary[j]);
-//			}
-//			
-//			
-//			
-//			
-//			json.put(allPaths.get(i).toString(), array.toJSONString());
-//		}
-		
-		
-		
-		//System.out.println(json);
-		
 	}
-
 }

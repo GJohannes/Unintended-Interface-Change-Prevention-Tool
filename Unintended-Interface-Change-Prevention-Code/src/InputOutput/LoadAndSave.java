@@ -21,28 +21,7 @@ import Miscellaneous.DefinedStrings;
 
 public class LoadAndSave {
 	
-	/*
-	 * Stores the variable which defines whether or not the pipeline should run when it is triggered
-	 */
-	public void saveRunPipelineBoolean(boolean runPipeline) throws IOException {
-		JSONObject json = new JSONObject();
-		ArrayList<String> list = new ArrayList<>();
-		Path path = Paths.get(DefinedStrings.runPipelineBooleanFile.getValue());
-		
-		json.put(DefinedStrings.runPipelineKey.getValue(),runPipeline);
-		list.add(json.toJSONString());
-		Files.write(path, list);
-	}
-	
-	public boolean loadRunPipelineBoolean() throws ParseException, IOException {	
-		JSONParser parser = new JSONParser();
-		Path path = Paths.get(DefinedStrings.runPipelineBooleanFile.getValue());
-		ArrayList<String> list = (ArrayList<String>) Files.readAllLines(path);	
-		
-		Object o = parser.parse(list.get(0));
-		JSONObject json = (JSONObject) o;
-		return (boolean) json.get(DefinedStrings.runPipelineKey.getValue());	
-	}
+
 	
 	public JSONArray readBinaryOfPath(Path path) throws IOException {
 		byte[] binary = Files.readAllBytes(path);
@@ -122,6 +101,31 @@ public class LoadAndSave {
 
 		return pathList;
 	}
+	
+	
+	
+//	/* ** Outdated Code
+//	 * Stores the variable which defines whether or not the pipeline should run when it is triggered
+//	 */
+//	public void saveRunPipelineBoolean(boolean runPipeline) throws IOException {
+//		JSONObject json = new JSONObject();
+//		ArrayList<String> list = new ArrayList<>();
+//		Path path = Paths.get(DefinedStrings.runPipelineBooleanFile.getValue());
+//		
+//		json.put(DefinedStrings.runPipelineKey.getValue(),runPipeline);
+//		list.add(json.toJSONString());
+//		Files.write(path, list);
+//	}
+//	
+//	public boolean loadRunPipelineBoolean() throws ParseException, IOException {	
+//		JSONParser parser = new JSONParser();
+//		Path path = Paths.get(DefinedStrings.runPipelineBooleanFile.getValue());
+//		ArrayList<String> list = (ArrayList<String>) Files.readAllLines(path);	
+//		
+//		Object o = parser.parse(list.get(0));
+//		JSONObject json = (JSONObject) o;
+//		return (boolean) json.get(DefinedStrings.runPipelineKey.getValue());	
+//	}
 	
 	
 }

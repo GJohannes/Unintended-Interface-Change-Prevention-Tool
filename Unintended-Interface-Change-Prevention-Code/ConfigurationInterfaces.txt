@@ -1,4 +1,4 @@
-#C:\Users\vp5cmew\Downloads\07169443.pdf
+C:\Users\vp5cmew\Downloads\07169443.pdf
 #             C:\Users\vp5cmew\Downloads\securitysupportincontinuousdeploymentpipeline.pdf
 
 
@@ -15,4 +15,7 @@ C:\Users\vp5cmew\Downloads\1.pdf
 
 #C:\Users\vp5cmew\Downloads\07169443.pdf            
 
-#C:\Users\vp5cmew\Downloads\1707.02327.pdf
+C:\Users\vp5cmew\Downloads\1707.02327.pdf
+
+
+C:\Users\vp5cmew\Downloads\05_Aktivitaetsdiagramm_Folien.pdf

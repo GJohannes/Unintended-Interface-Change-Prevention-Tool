@@ -13,8 +13,13 @@ import InputOutput.LoadAndSave;
 
 public class CompareBinaries {
 
-	
-	public void compareCurrentBinariesToAlreadyStoredOnes() throws IOException, ParseException, InvalidPathsInsideConfigurationException {
+	/*
+	 * Compares the binaries of the Files given in the Paths file to the stored binaries
+	 * are the number of binaries and paths equal and all binaries are matching the previous binaries everything is fine
+	 * in case there are differences the pipeline won
+	 *  
+	 */
+	public boolean areCurrentBinariesSameAsStoredOnes() throws IOException, ParseException, InvalidPathsInsideConfigurationException {
 		LoadAndSave loadSave = new LoadAndSave();
 		ArrayList<JSONObject> allOldBinaries = loadSave.loadBinaries();
 		ArrayList<Path> allPaths = loadSave.loadPaths();
@@ -22,38 +27,38 @@ public class CompareBinaries {
 		//precondition is that the same number of old interface binaries and number of paths to configuration files is there
 		if(allOldBinaries.size() != allPaths.size()) {
 			if(allOldBinaries.size() > allPaths.size()) {
-				//notify that there are stored binaries that are no longer been referenced in the config file
+				System.out.println("There are more old configuration binaries than Paths");
 			} else {
-				//notify that there are paths that have no old binary value and are therefore new
+				System.out.println("New paths detected - New files where added to the pipeline");
 			}
-			//TODO Set run false
-			System.out.println("set run false");
-			return;
+			return false;
 		}
 		
 		
 		for(int i = 0; i < allOldBinaries.size(); i++) {
 			inner: for(int j = 0; j < allPaths.size(); j++) {
-				System.out.println(allPaths.get(j));
 				if(allOldBinaries.get(i).containsKey(allPaths.get(j).getFileName().toString())) {
 					JSONArray binaryOfOldValue = (JSONArray) allOldBinaries.get(i).get(allPaths.get(j).getFileName().toString());
 					JSONArray binaryOfCurrentTime = loadSave.readBinaryOfPath(allPaths.get(j));
 					
 					if(this.compareJSONArrays(binaryOfOldValue, binaryOfCurrentTime)) {
 						// Do nothing since an "ok" is given
-						System.out.println("ok was given");
 						break inner;
+					//the curren comparison showed that there are unequal files
 					} else {
-						// TODO set run variable false since the binaries are different
-						System.out.println("Set run false 1");
-						break inner;
+						System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
+						return false;
+						//break inner;
 					}
 				//set run variable false since a interface is existing but it is not stored in the safe file
 				} else if(j == allPaths.size()-1) {
-					System.out.println("Set run false 2");
+					System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
+					return false;
 				}
 			}
 		}
+		//no mismatches where fund until here --> everything has to be correct
+		return true;
 	}
 	
 	public boolean compareJSONArrays(JSONArray first, JSONArray second) {
@@ -69,7 +74,7 @@ public class CompareBinaries {
 			// equals since values from an JSONArray are stored as String
 			//data conversion problems TODO REFACTOR?? --> currently working
 			if(a.byteValue() != b.byteValue()){
-				System.out.println("error detected");
+				System.out.println("Binary mismatch detected!");
 				System.out.println(first.get(i));
 				System.out.println(second.get(i));
 				return false;
