@@ -33,22 +33,22 @@ public class LoadAndSave {
 	}
 	
 	public void saveBinaries(ArrayList<JSONObject> allJSONs) throws IOException {
+		System.out.println("Started storing configuration values of given paths");
 		ArrayList<String> list = new ArrayList<>();
 		Path path = Paths.get(DefinedStrings.binaryFile.getValue());
-		System.out.println("before save");
 		
 		for(int i = 0; i < allJSONs.size(); i++) {
 			list.add(allJSONs.get(i).toJSONString());
 		}
 		
 		Files.write(path, list);
-		System.out.println("after save");
+		
+		System.out.println("Saved new configuration values of given paths");
 	}
 	
 	public void updateSavedBinaries() throws IOException, InvalidPathsInsideConfigurationException, ParseException {
 		ArrayList<JSONObject> allJSONs = new ArrayList<>();
 		ArrayList<Path> allPaths = loadPaths();
-		//ArrayList<JSONObject> oldBinaries = loadBinaries();
 		
 		for(int i = 0; i < allPaths.size(); i++) {
 			JSONObject newBinaries = new JSONObject();

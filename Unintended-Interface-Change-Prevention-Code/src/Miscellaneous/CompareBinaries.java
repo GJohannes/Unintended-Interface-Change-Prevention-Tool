@@ -22,8 +22,8 @@ public class CompareBinaries {
 	public boolean areCurrentBinariesSameAsStoredOnes() throws IOException, ParseException, InvalidPathsInsideConfigurationException {
 		LoadAndSave loadSave = new LoadAndSave();
 		ArrayList<JSONObject> allOldBinaries = loadSave.loadBinaries();
-		ArrayList<Path> allPaths = loadSave.loadPaths();
-
+		ArrayList<Path> allPaths = loadSave.loadPaths();	
+		
 		//precondition is that the same number of old interface binaries and number of paths to configuration files is there
 		if(allOldBinaries.size() != allPaths.size()) {
 			if(allOldBinaries.size() > allPaths.size()) {
@@ -34,6 +34,7 @@ public class CompareBinaries {
 			return false;
 		}
 		
+		ArrayList<Path> filesThatHaveBeenChanged = new ArrayList<>();
 		
 		for(int i = 0; i < allOldBinaries.size(); i++) {
 			inner: for(int j = 0; j < allPaths.size(); j++) {
@@ -44,21 +45,36 @@ public class CompareBinaries {
 					if(this.compareJSONArrays(binaryOfOldValue, binaryOfCurrentTime)) {
 						// Do nothing since an "ok" is given
 						break inner;
-					//the curren comparison showed that there are unequal files
+					//the current comparison showed that there are unequal files
 					} else {
-						System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
-						return false;
-						//break inner;
+//						System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
+//						return false;
+						filesThatHaveBeenChanged.add(allPaths.get(j));
+						break inner;
 					}
 				//set run variable false since a interface is existing but it is not stored in the safe file
 				} else if(j == allPaths.size()-1) {
-					System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
-					return false;
+//					System.out.println(allPaths.get(j) + " - Does not have a matching stored binary");
+//					return false;
+					filesThatHaveBeenChanged.add(allPaths.get(j));
+					break inner;
 				}
 			}
 		}
-		//no mismatches where fund until here --> everything has to be correct
-		return true;
+		if(filesThatHaveBeenChanged.size() == 0) {
+			// no files have been changed. old states and current sates of all files are binary equal
+			return true;
+		} else {
+			// print all files that have been changed
+			System.out.println("Files that have been changed:");
+			for(int i = 0; i < filesThatHaveBeenChanged.size(); i++) {
+				System.out.println(filesThatHaveBeenChanged.get(i));
+			}
+			return false;
+		}
+		
+//		//no mismatches where fund until here --> everything has to be correct
+//		return true;
 	}
 	
 	public boolean compareJSONArrays(JSONArray first, JSONArray second) {
