@@ -29,7 +29,7 @@ public class CompareBinaries {
 			if(allOldBinaries.size() > allPaths.size()) {
 				System.out.println("There are more old configuration binaries than Paths");
 			} else {
-				System.out.println("New paths detected - New files where added to the pipeline");
+				System.out.println("New paths detected - New files where added");
 			}
 			return false;
 		}
@@ -50,7 +50,7 @@ public class CompareBinaries {
 						filesThatHaveBeenChanged.add(allPaths.get(j));
 						break inner;
 					}
-				//set run variable false since a interface is existing but it is not stored in the safe file
+				// interface is existing but it is not stored in the safe file
 				} else if(j == allPaths.size()-1) {
 					filesThatHaveBeenChanged.add(allPaths.get(j));
 					break inner;
@@ -71,7 +71,7 @@ public class CompareBinaries {
 	
 	public boolean compareJSONArrays(JSONArray first, JSONArray second) {
 		if(first.size() != second.size()) {
-			System.out.println("different size");
+			System.out.println("Interface with different binary size then the previous one detected");
 			return false;
 		}
 		

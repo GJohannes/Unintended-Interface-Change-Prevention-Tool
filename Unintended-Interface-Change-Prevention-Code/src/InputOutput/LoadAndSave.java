@@ -36,7 +36,6 @@ public class LoadAndSave {
 	 * Saving the list of JSONObjects to the file system
 	 */
 	public void saveBinaries(ArrayList<JSONObject> allJSONs) throws IOException {
-		System.out.println("Started storing configuration values of given paths");
 		ArrayList<String> list = new ArrayList<>();
 		Path path = Paths.get(DefinedStrings.binaryFile.getValue());
 		
@@ -45,8 +44,6 @@ public class LoadAndSave {
 		}
 		
 		Files.write(path, list);
-		
-		System.out.println("Saved new configuration values of given paths");
 	}
 	
 	/*
@@ -54,6 +51,7 @@ public class LoadAndSave {
 	 * use saveBinaries to store them to the hard drive disk
 	 */
 	public void updateSavedBinaries() throws IOException, InvalidPathsInsideConfigurationException, ParseException {
+		System.out.println("Started updating");
 		ArrayList<JSONObject> allJSONs = new ArrayList<>();
 		ArrayList<Path> allPaths = loadPaths();
 		
@@ -62,7 +60,10 @@ public class LoadAndSave {
 			newBinaries.put(allPaths.get(i).getFileName().toString(), readBinaryOfPath(allPaths.get(i)));
 			allJSONs.add(newBinaries);
 		}
+		System.out.println("Finished updating values");
+		System.out.println("Start saving updated values");
 		saveBinaries(allJSONs);
+		System.out.println("Finished saving updated values");
 	}
 	
 	
