@@ -18,6 +18,7 @@ Prototype only. Important not supported features are:
  - entire configuration folder 
  - history 
  - networking 
+ - hashing
 
 ### Internal Sequence of Events
 ![Activity Diagram](https://s3.eu-central-1.amazonaws.com/bucket4testing23052018/ActivityDiagramUICPTImplementation.png)
