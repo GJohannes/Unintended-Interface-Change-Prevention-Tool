@@ -32,6 +32,9 @@ public class LoadAndSave {
 		return array;
 	}
 	
+	/*
+	 * Saving the list of JSONObjects to the file system
+	 */
 	public void saveBinaries(ArrayList<JSONObject> allJSONs) throws IOException {
 		System.out.println("Started storing configuration values of given paths");
 		ArrayList<String> list = new ArrayList<>();
@@ -46,6 +49,10 @@ public class LoadAndSave {
 		System.out.println("Saved new configuration values of given paths");
 	}
 	
+	/*
+	 * create a list of binaries that are all JSONObjects 
+	 * use saveBinaries to store them to the hard drive disk
+	 */
 	public void updateSavedBinaries() throws IOException, InvalidPathsInsideConfigurationException, ParseException {
 		ArrayList<JSONObject> allJSONs = new ArrayList<>();
 		ArrayList<Path> allPaths = loadPaths();
@@ -102,7 +109,18 @@ public class LoadAndSave {
 		return pathList;
 	}
 	
-	
+	public void createConfigurationFileToPaths() throws IOException {
+		ArrayList<String> list = new ArrayList<>();
+		Path path = Paths.get(DefinedStrings.PathsToConfigurationInterfaces.getValue());
+		
+		list.add("#Write the paths to a configuration file in a single line ");
+		list.add("#Write comments in this file by starting the line with an '#' ");
+		list.add("");
+		list.add("#Path to the configuration file if itself");
+		list.add(path.toAbsolutePath().toString());
+		
+		Files.write(path, list);
+	}
 	
 //	/* ** Outdated Code
 //	 * Stores the variable which defines whether or not the pipeline should run when it is triggered

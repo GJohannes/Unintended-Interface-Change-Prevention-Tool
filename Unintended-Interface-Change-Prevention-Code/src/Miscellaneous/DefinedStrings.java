@@ -4,7 +4,10 @@ public enum DefinedStrings {
 	runPipelineBooleanFile("runPipelineBooleanFile"),
 	runPipelineKey("runPipelineKey"),
 	binaryFile("binaryFile"),
-	PathsToConfigurationInterfaces("ConfigurationInterfaces.txt");
+	PathsToConfigurationInterfaces("ConfigurationInterfaces.txt"),
+	pipelinePartArgument("pipelinePart"),
+	updateInterfaceValuesArgument("acceptNewInterfaces");
+	
 
 	private final String keyValue;
 	
