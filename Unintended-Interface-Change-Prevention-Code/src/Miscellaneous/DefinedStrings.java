@@ -18,5 +18,4 @@ public enum DefinedStrings {
 	public String getValue() {
 		return keyValue;
 	}
-
 }

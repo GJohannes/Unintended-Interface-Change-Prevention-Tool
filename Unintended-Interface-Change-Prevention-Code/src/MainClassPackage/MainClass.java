@@ -16,10 +16,6 @@ import Miscellaneous.programmPreconditions;
 public class MainClass {
 
 	public static void main(String[] args) throws IOException, ParseException, InvalidPathsInsideConfigurationException, InterfaceHasChangedException {
-		args = new String[2];
-		args[0] = "pipelinePart";
-		//args[0] = "acceptNewInterfaces";
-
 		programmPreconditions preconditions = new programmPreconditions();
 		preconditions.createNonExistingFiles();
 

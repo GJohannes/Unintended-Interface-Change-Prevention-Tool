@@ -69,6 +69,11 @@ public class CompareBinaries {
 		}
 	}
 	
+	/*
+	 * compares two JSON arrays weather they are equal or not. 
+	 * Only works if the Arrays are only containing bytes which is given in this simple use case
+	 * TODO Refactor in not prototypical implementation 
+	 */
 	public boolean compareJSONArrays(JSONArray first, JSONArray second) {
 		if(first.size() != second.size()) {
 			System.out.println("Interface with different binary size then the previous one detected");
