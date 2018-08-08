@@ -21,7 +21,7 @@ Prototype only. Important not supported features are:
  - hashing
  
 ## Executable File
-![executable .jar File](https://s3.eu-central-1.amazonaws.com/bucket4testing23052018/UICPT_V1.1.jar)
+[executable .jar File](https://s3.eu-central-1.amazonaws.com/bucket4testing23052018/UICPT_V1.1.jar)
 
 ### Internal Sequence of Events
 ![Activity Diagram](https://s3.eu-central-1.amazonaws.com/bucket4testing23052018/ActivityDiagramUICPTImplementation.png)
