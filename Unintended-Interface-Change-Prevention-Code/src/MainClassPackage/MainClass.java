@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 
 import CustomExceptions.InterfaceHasChangedException;
+import CustomExceptions.InvalidArgumentException;
 import CustomExceptions.InvalidPathsInsideConfigurationException;
 
 import InputOutput.LoadAndSave;
@@ -15,7 +16,7 @@ import Miscellaneous.programmPreconditions;
 
 public class MainClass {
 
-	public static void main(String[] args) throws IOException, ParseException, InvalidPathsInsideConfigurationException, InterfaceHasChangedException {
+	public static void main(String[] args) throws IOException, ParseException, InvalidPathsInsideConfigurationException, InterfaceHasChangedException, InvalidArgumentException {
 		programmPreconditions preconditions = new programmPreconditions();
 		preconditions.createNonExistingFiles();
 
@@ -32,6 +33,7 @@ public class MainClass {
 		} else {
 			System.out.println("First argument has to be " + DefinedStrings.updateInterfaceValuesArgument.getValue()
 					+ " or " + DefinedStrings.pipelinePartArgument.getValue());
+			throw new InvalidArgumentException();
 		}
 	}
 }
